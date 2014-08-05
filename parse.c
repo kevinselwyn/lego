@@ -163,7 +163,7 @@ void parseINFO(struct INFO *INF, struct block *bloc) {
 			i += 2;
 
 			length = block.data[i++];
-			INFO.name = malloc(sizeof(char) * (length + 1));
+			INFO.name = malloc(sizeof(char) * length + 1);
 
 			for (j = 0, k = length; j < k; j++) {
 				INFO.name[j] = block.data[j + i];
@@ -178,7 +178,7 @@ void parseINFO(struct INFO *INF, struct block *bloc) {
 			i += 2;
 
 			length = block.data[i++];
-			INFO.version = malloc(sizeof(char) * (length + 1));
+			INFO.version = malloc(sizeof(char) * length + 1);
 
 			for (j = 0, k = length; j < k; j++) {
 				INFO.version[j] = block.data[j + i];
@@ -193,7 +193,7 @@ void parseINFO(struct INFO *INF, struct block *bloc) {
 			i += 2;
 
 			length = block.data[i++];
-			INFO.description = malloc(sizeof(char) * (length + 1));
+			INFO.description = malloc(sizeof(char) * length + 1);
 
 			for (j = 0, k = length; j < k; j++) {
 				INFO.description[j] = block.data[j + i];
@@ -208,7 +208,7 @@ void parseINFO(struct INFO *INF, struct block *bloc) {
 			i += 2;
 
 			length = block.data[i++];
-			INFO.author.name = malloc(sizeof(char) * (length + 1));
+			INFO.author.name = malloc(sizeof(char) * length + 1);
 
 			for (j = 0, k = length; j < k; j++) {
 				INFO.author.name[j] = block.data[j + i];
@@ -223,7 +223,7 @@ void parseINFO(struct INFO *INF, struct block *bloc) {
 			i += 2;
 
 			length = block.data[i++];
-			INFO.author.email = malloc(sizeof(char) * (length + 1));
+			INFO.author.email = malloc(sizeof(char) * length + 1);
 
 			for (j = 0, k = length; j < k; j++) {
 				INFO.author.email[j] = block.data[j + i];
@@ -238,7 +238,7 @@ void parseINFO(struct INFO *INF, struct block *bloc) {
 			i += 2;
 
 			length = block.data[i++];
-			INFO.author.url = malloc(sizeof(char) * (length + 1));
+			INFO.author.url = malloc(sizeof(char) * length + 1);
 
 			for (j = 0, k = length; j < k; j++) {
 				INFO.author.url[j] = block.data[j + i];
@@ -512,7 +512,7 @@ void listBricks(struct BRKS BRKS) {
 		if (in_array == -1) {
 			length = strlen(brick.name) + strlen(color.name) + 2;
 
-			combos[combo_pos].name = malloc(sizeof(char) * (length + 1));
+			combos[combo_pos].name = malloc(sizeof(char) * length + 1);
 			strcpy(combos[combo_pos].name, brick.name);
 			strcat(combos[combo_pos].name, ", ");
 			strcat(combos[combo_pos].name, color.name);
@@ -562,7 +562,7 @@ void parse(struct lego *leg, char *filename, int verbose, char *which) {
 		goto cleanup;
 	}
 
-	filedata = malloc(sizeof(char) * (filesize + 1));
+	filedata = malloc(sizeof(char) * filesize + 1);
 
 	if (!filedata) {
 		printf("Memory error\n");
@@ -578,13 +578,13 @@ void parse(struct lego *leg, char *filename, int verbose, char *which) {
 		goto cleanup;
 	}
 
-	lego.header = malloc(sizeof(char) * (16 + 1));
+	lego.header = malloc(sizeof(char) * 16 + 1);
 	for (i = 0, l = 16; i < l; i++) {
 		lego.header[i] = filedata[i];
 	}
 	lego.header[i] = '\0';
 
-	lego.signature = malloc(sizeof(char) * (4 + 1));
+	lego.signature = malloc(sizeof(char) * 4 + 1);
 	for (i = 0, l = 4; i < l; i++) {
 		lego.signature[i] = lego.header[i];
 	}
@@ -596,11 +596,11 @@ void parse(struct lego *leg, char *filename, int verbose, char *which) {
 		lego.version += (double)filedata[5] / 10;
 	} else if (filedata[5] < 100) {
 		lego.version += (double)filedata[5] / 100;
-	} else if (filedata[5] < 1000) {
+	} else {
 		lego.version += (double)filedata[5] / 1000;
 	}
 
-	lego.reserved = malloc(sizeof(char) * (6 + 1));
+	lego.reserved = malloc(sizeof(char) * 6 + 1);
 	for (i = 0, l = 5; i < l; i++) {
 		lego.reserved[i] = lego.header[6 + i];
 	}
@@ -615,7 +615,7 @@ void parse(struct lego *leg, char *filename, int verbose, char *which) {
 	counter = 0;
 
 	while (scrubber < filesize) {
-		lego.blocks[counter].signature = malloc(sizeof(char) * (4 + 1));
+		lego.blocks[counter].signature = malloc(sizeof(char) * 4 + 1);
 		for (i = 0, l = 4; i < l; i++) {
 			lego.blocks[counter].signature[i] = filedata[scrubber + i];
 		}
@@ -626,12 +626,12 @@ void parse(struct lego *leg, char *filename, int verbose, char *which) {
 		lego.blocks[counter].length = 0;
 
 		for (i = 0, l = 4; i < l; i++) {
-			lego.blocks[counter].length += ((filedata[scrubber + i] < 0) ? 256 + filedata[scrubber + i] : filedata[scrubber + i]) * pow(256, 3 - i);
+			lego.blocks[counter].length += (unsigned int)filedata[scrubber + i] * pow(256, 3 - i);
 		}
 
 		scrubber += 4;
 
-		lego.blocks[counter].data = malloc(sizeof(char) * (lego.blocks[counter].length + 1));
+		lego.blocks[counter].data = malloc(sizeof(char) * lego.blocks[counter].length + 1);
 		for (i = 0, l = lego.blocks[counter].length; i < l; i++) {
 			lego.blocks[counter].data[i] = filedata[scrubber + i];
 		}
@@ -639,7 +639,7 @@ void parse(struct lego *leg, char *filename, int verbose, char *which) {
 
 		scrubber += lego.blocks[counter].length;
 
-		lego.blocks[counter].hash = malloc(sizeof(char) * (4 + 1));
+		lego.blocks[counter].hash = malloc(sizeof(char) * 4 + 1);
 		for (i = 0, l = 4; i < l; i++) {
 			lego.blocks[counter].hash[i] = filedata[scrubber + i];
 		}

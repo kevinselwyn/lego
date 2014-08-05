@@ -145,6 +145,11 @@ int get_brick_by_size(int width, int height);
 int encode(char *input, char *output);
 
 /* decode.c */
+struct coords{
+	int x, y;
+};
+
+struct coords find_origin(int width, int height);
 int decode(char *input, char *output, struct lego lego);
 
 /* image.c */

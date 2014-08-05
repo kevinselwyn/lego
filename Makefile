@@ -7,9 +7,9 @@ EXEC      := ./$(BUILD_DIR)/$(NAME)
 
 all: build
 
-build: $(FILES) lego.h
+build: $(FILES) lego.h parse.h
 	mkdir -p $(BUILD_DIR)
-	gcc -w -o $(EXEC) $(FILES) -lm -lpng -ljpeg
+	gcc -Wall -Wextra -o $(EXEC) $(FILES) -lm -lpng -ljpeg -D_LEGO_TRANSPARENCY -O2
 
 test: build
 	mkdir -p $(TEST_DIR)

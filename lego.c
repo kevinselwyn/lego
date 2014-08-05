@@ -35,14 +35,14 @@ struct action {
 };
 
 struct action actions[8] = {
-	{ "--version", version },
-	{ "-v", version },
-	{ "--help", help },
-	{ "-h", help },
-	{ "--warranty", warranty },
-	{ "-w", warranty },
-	{ "--conditions", conditions },
-	{ "-c", conditions }
+	{ "--version", version, 1 },
+	{ "-v", version, 1 },
+	{ "--help", help, 1 },
+	{ "-h", help, 1 },
+	{ "--warranty", warranty, 1 },
+	{ "-w", warranty, 1 },
+	{ "--conditions", conditions, 1 },
+	{ "-c", conditions, 1 }
 };
 
 int main(int argc, char *argv[]) {
@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
 		if (strcmp(action, actions[i].name) == 0) {
 			actions[i].func();
 
-			rc = 1;
+			rc = actions[i].rc;
 			goto cleanup;
 		}
 	}

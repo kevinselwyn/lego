@@ -30,7 +30,8 @@ struct gpl_index gpl_toc[18] = {
 };
 
 void gpl(int index) {
-	int rc = 0, start = 0, length = 0;
+	int rc = 0, start = 0;
+	unsigned int length = 0;
 	char *text = NULL;
 	FILE *license = fopen(LICENSE, "r");
 	struct gpl_index toc;
@@ -54,7 +55,7 @@ void gpl(int index) {
 	}
 
 	fseek(license, start, SEEK_SET);
-	text = malloc(sizeof(char) * (length + 1));
+	text = malloc(sizeof(char) * length + 1);
 
 	if (fread(text, 1, length, license) != length) {
 		rc = 1;

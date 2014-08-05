@@ -32,7 +32,7 @@
 int prompt(char **variable, char *msg, size_t size) {
 	char *pos = NULL;
 
-	*variable = malloc(sizeof(char) * (size + 1));
+	*variable = malloc(sizeof(char) * size + 1);
 
 	printf("%s: ", msg);
 	if (fgets(*variable, size, stdin) == NULL) {
@@ -110,8 +110,9 @@ int INFO2data(char **data, struct INFO INFO) {
 }
 
 int writeBlock(FILE **output_file, struct block block) {
-	int rc = 0, write_length = 8 + block.length + 4, i = 0, l = 0;
-	unsigned char *output = malloc(sizeof(char) * write_length);
+	int rc = 0, i = 0, l = 0;
+	unsigned int write_length = 8 + block.length + 4;
+	unsigned char *output = malloc(sizeof(char) * write_length + 1);
 	uint32_t hashed = hash(block.data, block.length, 0);
 
 	for (i = 0, l = 4; i < l; i++) {
@@ -206,7 +207,7 @@ int encode(char *input, char *output) {
 	lego.width = image.width;
 	lego.height = image.height;
 
-	lego.header = malloc(sizeof(char) * (16 + 1));
+	lego.header = malloc(sizeof(char) * 16 + 1);
 	for (i = 0, l = 4; i < l; i++) {
 		lego.header[i] = lego.signature[i];
 	}

@@ -28,10 +28,6 @@
 #include <string.h>
 #include "lego.h"
 
-struct coords{
-	int x, y;
-};
-
 struct coords find_origin(int width, int height) {
 	int x = 0, y = 0;
 	struct coords coords = { 0, 0 };

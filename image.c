@@ -35,8 +35,7 @@
 
 struct image read_png(char *filename) {
 	int rc = 0, i = 0, x = 0, y = 0, width = 0, height = 0;
-	char *header = NULL;
-	unsigned char *data = NULL;
+	unsigned char *header = NULL, *data = NULL;
 	FILE *file = NULL;
 	png_byte color_type, bit_depth;
 	png_structp png_ptr;
@@ -53,7 +52,7 @@ struct image read_png(char *filename) {
 		goto cleanup;
 	}
 
-	header = malloc(sizeof(char) * (8 + 1));
+	header = malloc(sizeof(char) * 8 + 1);
 
 	if (fread(header, 1, 8, file) != 8) {
 		printf("Could not read %s\n", filename);
@@ -110,17 +109,10 @@ struct image read_png(char *filename) {
 		goto cleanup;
 	}
 
-	if (setjmp(png_jmpbuf(png_ptr))) {
-		printf("Could not read PNG\n");
-
-		rc = 1;    
-		goto cleanup;
-	}
-
-	row_pointers = (png_bytep*)malloc(sizeof(png_bytep) * height);
+	row_pointers = (png_bytep*)malloc(sizeof(png_bytep) * height + 1);
 
 	for (y = 0; y < height; y++) {
-		row_pointers[y] = (png_byte*)malloc(png_get_rowbytes(png_ptr, info_ptr));
+		row_pointers[y] = (png_byte*)malloc(png_get_rowbytes(png_ptr, info_ptr) + 1);
 	}
 
 	png_read_image(png_ptr, row_pointers);
@@ -220,10 +212,10 @@ int write_png(struct image image, char *filename) {
 	png_set_IHDR(png_ptr, info_ptr, width, height, bit_depth, color_type, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
 	png_write_info(png_ptr, info_ptr);
 
-	row_pointers = (png_bytep*)malloc(sizeof(png_bytep) * height);
+	row_pointers = (png_bytep*)malloc(sizeof(png_bytep) * height + 1);
 
 	for (y = 0; y < height; y++) {
-		row_pointers[y] = (png_byte*)malloc(png_get_rowbytes(png_ptr, info_ptr));
+		row_pointers[y] = (png_byte*)malloc(png_get_rowbytes(png_ptr, info_ptr) + 1);
 	}
 
 	for (y = 0, i = 0; y < height; y++) {

@@ -28,10 +28,6 @@
 #include <string.h>
 #include "lego.h"
 
-#if !defined(__APPLE__)
-#include <malloc.h>
-#endif
-
 #define VERSION "1.0.1"
 
 char *exec = "lego";
