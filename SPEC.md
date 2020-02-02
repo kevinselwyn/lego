@@ -1,10 +1,10 @@
-#LEGO® Enhanced Graphics Object (LEGO) File Format Specification
+# LEGO® Enhanced Graphics Object (LEGO) File Format Specification
 
 A file format for representing 2D LEGO® brick images
 
 _Note: LEGO® is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this project._
 
-##File Header
+## File Header
 
 | Length   | Description                                                       |
 | -------- | ----------------------------------------------------------------- |
@@ -14,7 +14,7 @@ _Note: LEGO® is a trademark of the LEGO Group of companies which does not spons
 | 2        | Width of the image in 1x1 bricks (1 to 1000)                      |
 | 2        | Height of the image in 1x1 bricks (1 to 1000)                     |
 
-##Resource Blocks
+## Resource Blocks
 
 | Length   | Description                                                       |
 | -------- | ----------------------------------------------------------------- |
@@ -27,7 +27,7 @@ The `signature` is a 4-byte ASCII string that denotes one of the 4 types of reso
 
 The `32-bit hash` is a hash of the `resource data` using an implementation of the MurmerHash function and is used to detect block-level data corruption.
 
-###Info Block (INFO)
+### Info Block (INFO)
 
 The INFO block holds the metadata for the LEGO image to facilitate sharing and versioning.
 
@@ -55,7 +55,7 @@ The following sub-blocks and signatures are supported:
 * AE (0x41 0x45) - Author email
 * AU (0x41 0x55) - Author URL
 
-###Bricks Block (BRKS)
+### Bricks Block (BRKS)
 
 The BRKS block contains the brick ID, color ID, and brick rotation for each brick used in the image. The blocks are placed in the image in the order they appear and originating from the top-most and then left-most open space.
 
@@ -74,7 +74,7 @@ The resource data for the BRKS block adhere to the following format for each ind
 | 1        | Color ID                                                          |
 | 1        | Brick rotation (0x00: 0°, 0x01: 90°, 0x02: 180°, 0x03: 270°)      |
 
-###New Colors Block (NCLR)
+### New Colors Block (NCLR)
 
 Colors may be added that don't fall within the official LEGO® color palette.
 
@@ -96,7 +96,7 @@ The resource data for the NCLR block adheres to the following format:
 | 1        | Length of name                                                    |
 | Variable | Name                                                              |
 
-###New Bricks Block (NBRK)
+### New Bricks Block (NBRK)
 
 Bricks may be added that are not included in the default brick library.
 
@@ -117,7 +117,7 @@ The resource data for the NBRK block adheres to the following format:
 | 1        | Length of name                                                    |
 | Variable | Name                                                              |
 
-##Bricks
+## Bricks
 
 The simplest bricks found in [Pick A Brick](http://shop.lego.com/en-US/Pick-A-Brick-ByTheme) on the LEGO® shop.
 
@@ -138,7 +138,7 @@ The simplest bricks found in [Pick A Brick](http://shop.lego.com/en-US/Pick-A-Br
 | 0c     | 6      | 2      | 2x6    |
 | 0d     | 8      | 2      | 2x8    |
 
-##Colors
+## Colors
 
 The official solid, transparent, and special LEGO® colors found on [Brickipedia](http://lego.wikia.com/wiki/Colour_Palette).
 

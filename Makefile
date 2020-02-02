@@ -13,7 +13,7 @@ build: $(FILES) lego.h parse.h
 
 test: build
 	mkdir -p $(TEST_DIR)
-	curl -o $(TEST_DIR)/lisa.jpg http://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Mona_Lisa.jpg/396px-Mona_Lisa.jpg
+	curl -o $(TEST_DIR)/lisa.jpg https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Mona_Lisa.jpg/396px-Mona_Lisa.jpg
 	$(EXEC) encode $(TEST_DIR)/lisa.jpg
 	$(EXEC) decode $(TEST_DIR)/lisa.lego
 

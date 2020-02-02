@@ -1,14 +1,14 @@
-#LEGO® Enhanced Graphics Object (LEGO) File Format
+# LEGO® Enhanced Graphics Object (LEGO) File Format
 
 A file format for representing 2D LEGO® brick images
 
 _Note: LEGO® is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this project._
 
-##Specification
+## Specification
 
 Read the [spec](SPEC.md).
 
-##Installation
+## Installation
 
 ```bash
 make && sudo make install
@@ -16,7 +16,7 @@ make && sudo make install
 
 _Note: Dependencies include libpng and libjpeg._
 
-##Usage
+## Usage
 
 ```bash
 Usage: lego [--version,-v] [--help,-h]
@@ -32,9 +32,9 @@ The commands are:
    bricks  Lists all bricks available
 ```
 
-##Explanation
+## Explanation
 
-###Encoding
+### Encoding
 
 The encoding algorithm in the included program is very basic and converts images on a line by line basis. For example:
 
@@ -44,11 +44,11 @@ But with a human touch (or a better encoder) the result yields less bricks by th
 
 ![Encoded By Human](img/encoding-human.gif)
 
-###Decoding
+### Decoding
 
 When decoding, each new brick is placed in the top-most/left-most open space.
 
-##Examples
+## Examples
 
 Mona Lisa by Leonardo da Vinci (72,001 bricks):
 
